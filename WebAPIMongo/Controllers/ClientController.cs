@@ -42,12 +42,19 @@ namespace WebAPIMongo.Controllers
         #endregion
 
         #region Lista Pelo Nome 
-        [HttpGet("GetClientName")]
+        [HttpGet("{name}", Name = "GetName")]
         public ActionResult<Client> GetName(string name)
         {
-            var client = _clientService.Get().Find(client => client.Name == name);
-            if (client == null) 
-                return NotFound();
+            var client = _clientService.GetByName(name);
+            if (client == null) return NotFound();//404
+
+            return Ok(client);
+        }
+        [HttpGet("address/{idaddress:length(24)}", Name = "GetClientAddress")]
+        public ActionResult<Client> GetAddress(string idaddress)
+        {
+            var client = _clientService.GetByAddress(idaddress);
+            if (client == null) return NotFound();
 
             return Ok(client);
         }

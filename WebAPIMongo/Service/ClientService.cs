@@ -27,6 +27,10 @@ namespace WebAPIMongo.Service
 
         public Client Get(string id) => _clients.Find<Client>(client => client.Id == id).FirstOrDefault();
 
+        public List<Client> GetByName(string name) => _clients.Find<Client>(client => client.Name == name).ToList();
+
+        public Client GetByAddress(string id) => _clients.Find(client => client.Address.Id == id).FirstOrDefault();
+
         public void Update(string id, Client clientIn)
         {
             _clients.ReplaceOne(client => client.Id == id, clientIn);
